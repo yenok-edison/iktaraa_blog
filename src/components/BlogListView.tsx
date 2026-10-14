@@ -144,7 +144,7 @@ export const BlogListView: React.FC<BlogListViewProps> = ({
     <section className="pt-4 sm:pt-6 pb-16 max-w-[1536px] mx-auto px-4 sm:px-6 lg:px-8">
       {/* SECTION HEADER: Matches exact pastel background, font, and #e34060 color */}
       <div className="mb-8 sm:mb-10 text-center space-y-4 bg-gradient-to-r from-[#F2F7E9] via-[#FAF7ED] to-[#FDF1F3] border border-slate-200/80 rounded-3xl p-6 sm:p-10 shadow-2xs">
-        <h1 className="text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#189BA3] tracking-tight leading-tight">
+        <h1 className="text-2xl sm:text-3xl lg:text-[36px] font-bold text-[#23a2b3] tracking-tight leading-tight">
           Explore Music Knowledge & Masterclasses
         </h1>
 
@@ -199,16 +199,8 @@ export const BlogListView: React.FC<BlogListViewProps> = ({
         )}
       </div>
 
-      {/* MOBILE TOGGLE BUTTONS FOR HIGHLIGHTS & FILTERS */}
+      {/* MOBILE TOGGLE BUTTONS FOR FILTERS & HIGHLIGHTS */}
       <div className="lg:hidden flex items-center justify-between gap-3 mb-6">
-        <button
-          onClick={() => setMobileHighlightsOpen(!mobileHighlightsOpen)}
-          className="flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm font-bold flex items-center justify-center gap-2 shadow-2xs cursor-pointer"
-        >
-          <Sparkles className="w-4 h-4 text-rose-500" />
-          <span>{mobileHighlightsOpen ? "Hide Highlights" : "View Highlights"}</span>
-        </button>
-
         <button
           onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
           className="flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm font-bold flex items-center justify-center gap-2 shadow-2xs cursor-pointer"
@@ -219,19 +211,15 @@ export const BlogListView: React.FC<BlogListViewProps> = ({
             <span className="w-2 h-2 rounded-full bg-rose-500" />
           )}
         </button>
-      </div>
 
-      {/* Mobile Drawer: Highlights */}
-      {mobileHighlightsOpen && (
-        <div className="lg:hidden mb-6 animate-in slide-in-from-top-2">
-          <AnimatedHighlights
-            highlightPosts={highlightPosts}
-            upcomingEvents={upcomingEvents}
-            onSelectPost={onSelectPost}
-            onEventClick={onEventClick}
-          />
-        </div>
-      )}
+        <button
+          onClick={() => setMobileHighlightsOpen(!mobileHighlightsOpen)}
+          className="flex-1 py-3 px-4 rounded-xl bg-white border border-slate-200 text-slate-800 text-sm font-bold flex items-center justify-center gap-2 shadow-2xs cursor-pointer"
+        >
+          <Sparkles className="w-4 h-4 text-rose-500" />
+          <span>{mobileHighlightsOpen ? "Hide Highlights" : "View Highlights"}</span>
+        </button>
+      </div>
 
       {/* Mobile Drawer: Filters */}
       {mobileFilterOpen && (
@@ -252,16 +240,35 @@ export const BlogListView: React.FC<BlogListViewProps> = ({
         </div>
       )}
 
-      {/* 3-COLUMN RESPONSIVE LAYOUT (Maximized Highlights and Blogs, Reduced Filter column) */}
-      <div className="flex flex-col lg:flex-row gap-6 xl:gap-8 items-start">
-        {/* LEFT COLUMN: BLOG HIGHLIGHTS (EXPANDED TO ~340px-360px FOR MAX VIEW) */}
-        <div className="hidden lg:block w-[320px] xl:w-[350px] shrink-0 sticky top-24">
+      {/* Mobile Drawer: Highlights */}
+      {mobileHighlightsOpen && (
+        <div className="lg:hidden mb-6 animate-in slide-in-from-top-2">
           <AnimatedHighlights
             highlightPosts={highlightPosts}
             upcomingEvents={upcomingEvents}
             onSelectPost={onSelectPost}
             onEventClick={onEventClick}
           />
+        </div>
+      )}
+
+      {/* 3-COLUMN RESPONSIVE LAYOUT (Left: Filters, Center: Blogs, Right: Highlights) */}
+      <div className="flex flex-col lg:flex-row gap-6 xl:gap-8 items-start">
+        {/* LEFT COLUMN: FILTERS & SORT */}
+        <div className="hidden lg:block w-[220px] xl:w-[250px] shrink-0 sticky top-24">
+          <BlogFilters
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            dateFilter={dateFilter}
+            onDateFilterChange={setDateFilter}
+            selectedTag={selectedTag}
+            onTagChange={setSelectedTag}
+            availableTags={availableTags}
+            totalResultsCount={filteredPosts.length}
+            onResetFilters={handleResetFilters}
+            hasActiveFilters={hasActiveFilters}
+            onSubscribe={onSubscribe}
+          />  
         </div>
 
         {/* MIDDLE COLUMN: BLOG BOXES (MAX EXPANSIVE CENTER VIEW) */}
@@ -322,20 +329,13 @@ export const BlogListView: React.FC<BlogListViewProps> = ({
           )}
         </div>
 
-        {/* RIGHT COLUMN: SECONDARY FILTERS (SLIMMED DOWN TO ~220px-240px) */}
-        <div className="hidden lg:block w-[220px] xl:w-[240px] shrink-0 sticky top-24">
-          <BlogFilters
-            sortBy={sortBy}
-            onSortChange={setSortBy}
-            dateFilter={dateFilter}
-            onDateFilterChange={setDateFilter}
-            selectedTag={selectedTag}
-            onTagChange={setSelectedTag}
-            availableTags={availableTags}
-            totalResultsCount={filteredPosts.length}
-            onResetFilters={handleResetFilters}
-            hasActiveFilters={hasActiveFilters}
-            onSubscribe={onSubscribe}
+        {/* RIGHT COLUMN: BLOG HIGHLIGHTS */}
+        <div className="hidden lg:block w-[320px] xl:w-[350px] shrink-0 sticky top-24">
+          <AnimatedHighlights
+            highlightPosts={highlightPosts}
+            upcomingEvents={upcomingEvents}
+            onSelectPost={onSelectPost}
+            onEventClick={onEventClick}
           />
         </div>
       </div>
