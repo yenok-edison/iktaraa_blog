@@ -167,6 +167,7 @@ export function adaptBlogPost(apiPost: ApiPost): BlogPost {
                 artist: toText(audio.artist),
                 duration: formatDuration(audio.duration_seconds),
                 genre: toText(audio.genre),
+                src: toText(audio.media.url),
             }
             : undefined,
 
