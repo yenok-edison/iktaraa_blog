@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg-amber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#78350F" />
+      <stop offset="50%" stop-color="#B45309" />
+      <stop offset="100%" stop-color="#451A03" />
+    </linearGradient>
+
+    <radialGradient id="amber-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FDE68A" stop-opacity="0.28" />
+      <stop offset="60%" stop-color="#D97706" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#451A03" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg-amber)" />
+  <rect width="1200" height="675" fill="url(#amber-glow)" />
+
+  <!-- Traditional Tanpura / Sitar Acoustic Strings & Frets (Music Storytelling Event) -->
+  <g transform="translate(180, 80)" stroke="white" stroke-width="1.2" stroke-opacity="0.25" fill="none">
+    <!-- Longitudinal instrument strings -->
+    <line x1="0" y1="200" x2="900" y2="200" stroke-width="1.5" stroke-opacity="0.4" />
+    <line x1="0" y1="215" x2="900" y2="215" stroke-width="1.2" stroke-opacity="0.3" />
+    <line x1="0" y1="230" x2="900" y2="230" stroke-width="1.2" stroke-opacity="0.3" />
+    <line x1="0" y1="245" x2="900" y2="245" stroke-width="1.5" stroke-opacity="0.4" />
+
+    <!-- Curved Sitar Brass Frets -->
+    <path d="M220,180 Q230,225 220,265" stroke-width="2" stroke-opacity="0.35" />
+    <path d="M320,180 Q330,225 320,265" stroke-width="2" stroke-opacity="0.35" />
+    <path d="M440,180 Q450,225 440,265" stroke-width="2" stroke-opacity="0.35" />
+    <path d="M580,180 Q590,225 580,265" stroke-width="2" stroke-opacity="0.35" />
+    <path d="M740,180 Q750,225 740,265" stroke-width="2" stroke-opacity="0.35" />
+  </g>
+
+  <!-- Artisanal South Indian Filter Coffee Tumbler & Davarah (Kaapi Event Motif) -->
+  <g transform="translate(680, 160)" stroke="white" stroke-width="2" fill="none" stroke-opacity="0.45">
+    <!-- Davarah (Wide base bowl) -->
+    <path d="M60,280 C60,330 220,330 220,280 L235,240 C235,230 45,230 45,240 Z" stroke-width="2.2" />
+    
+    <!-- Tumbler (Tall brass cup) -->
+    <path d="M90,140 L105,250 C105,260 175,260 175,250 L190,140 Z" stroke-width="2.2" />
+    <!-- Tumbler Lip Rim -->
+    <ellipse cx="140" cy="140" rx="50" ry="12" stroke-width="2.2" />
+    
+    <!-- Steaming Aroma Curves (Warm Coffee & Story Ambiance) -->
+    <path d="M125,120 C115,90 145,70 135,40" stroke="#FDE68A" stroke-opacity="0.45" stroke-width="2" stroke-linecap="round" />
+    <path d="M150,115 C165,85 135,65 150,35" stroke="#FDE68A" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" />
+  </g>
+
+  <!-- Gathering Circular Seating Accent -->
+  <circle cx="750" cy="400" r="180" stroke="white" stroke-opacity="0.08" stroke-dasharray="6 6" fill="none" />
+</svg>

@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <!-- Deep midnight navy background with subtle vignette -->
+    <linearGradient id="bg-navy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1A1647" />
+      <stop offset="50%" stop-color="#231E59" />
+      <stop offset="100%" stop-color="#120E33" />
+    </linearGradient>
+
+    <!-- Subtle golden acoustic spotlight -->
+    <radialGradient id="spotlight" cx="65%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#FCD34D" stop-opacity="0.22" />
+      <stop offset="50%" stop-color="#23A2B3" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#231E59" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="soundwave" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.03" />
+      <stop offset="50%" stop-color="#FCD34D" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#23A2B3" stop-opacity="0.05" />
+    </linearGradient>
+
+    <linearGradient id="instrument-line" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.05" />
+    </linearGradient>
+  </defs>
+
+  <!-- Base Canvas -->
+  <rect width="1200" height="675" fill="url(#bg-navy)" />
+  <rect width="1200" height="675" fill="url(#spotlight)" />
+
+  <!-- Stage Light Beams -->
+  <polygon points="780,0 650,675 920,675" fill="white" fill-opacity="0.04" />
+  <polygon points="400,0 200,675 550,675" fill="white" fill-opacity="0.03" />
+
+  <!-- Acoustic Sound Wave Harmonics (Event Related) -->
+  <g stroke="url(#soundwave)" stroke-width="1.5" fill="none">
+    <path d="M0,450 C200,430 350,470 500,450 C650,430 800,480 950,450 C1050,430 1150,460 1200,450" opacity="0.6" />
+    <path d="M0,465 C220,440 380,490 530,465 C680,440 820,495 970,465 C1080,445 1160,475 1200,465" opacity="0.4" />
+    <path d="M0,480 C240,455 400,505 550,480 C700,455 850,510 1000,480 C1100,460 1170,490 1200,480" opacity="0.25" />
+  </g>
+
+  <!-- Subtle Acoustic Guitar & Grand Piano Silhouette Artwork -->
+  <g transform="translate(700, 140)" stroke="url(#instrument-line)" stroke-width="1.5" fill="none" opacity="0.45">
+    <!-- Acoustic Guitar Body Curves -->
+    <path d="M220,100 C270,100 310,135 310,180 C310,215 285,245 260,260 C295,280 330,325 330,380 C330,445 275,500 210,500 C145,500 90,445 90,380 C90,325 125,280 160,260 C135,245 110,215 110,180 C110,135 150,100 200,100 Z" stroke-dasharray="8 4" />
+    <!-- Soundhole -->
+    <circle cx="210" cy="240" r="38" stroke="#FCD34D" stroke-opacity="0.4" stroke-width="2" />
+    <!-- Guitar Bridge & Strings -->
+    <line x1="160" y1="380" x2="260" y2="380" stroke="#FCD34D" stroke-opacity="0.5" stroke-width="3" />
+    <line x1="210" y1="50" x2="210" y2="380" stroke="white" stroke-opacity="0.3" stroke-width="1" />
+    <line x1="205" y1="50" x2="205" y2="380" stroke="white" stroke-opacity="0.2" stroke-width="1" />
+    <line x1="215" y1="50" x2="215" y2="380" stroke="white" stroke-opacity="0.2" stroke-width="1" />
+  </g>
+
+  <!-- Grand Piano Contour on Stage (Left/Mid) -->
+  <g transform="translate(180, 220)" stroke="url(#instrument-line)" stroke-width="1.2" fill="none" opacity="0.35">
+    <path d="M50,280 L50,180 C50,150 120,80 220,80 C320,80 390,120 440,160 C500,210 540,250 540,280 Z" />
+    <line x1="50" y1="280" x2="540" y2="280" stroke="white" stroke-opacity="0.4" stroke-width="2" />
+    <!-- Piano keys suggestion -->
+    <line x1="80" y1="280" x2="80" y2="265" stroke="white" stroke-opacity="0.3" stroke-width="1" />
+    <line x1="110" y1="280" x2="110" y2="265" stroke="white" stroke-opacity="0.3" stroke-width="1" />
+    <line x1="140" y1="280" x2="140" y2="265" stroke="white" stroke-opacity="0.3" stroke-width="1" />
+    <line x1="170" y1="280" x2="170" y2="265" stroke="white" stroke-opacity="0.3" stroke-width="1" />
+    <line x1="200" y1="280" x2="200" y2="265" stroke="white" stroke-opacity="0.3" stroke-width="1" />
+    <line x1="230" y1="280" x2="230" y2="265" stroke="white" stroke-opacity="0.3" stroke-width="1" />
+    <line x1="260" y1="280" x2="260" y2="265" stroke="white" stroke-opacity="0.3" stroke-width="1" />
+  </g>
+
+  <!-- Stage Plinth Line & Ambient Intimacy Dots -->
+  <line x1="0" y1="560" x2="1200" y2="560" stroke="white" stroke-opacity="0.12" stroke-width="1.5" />
+  <circle cx="850" cy="220" r="2" fill="#FCD34D" fill-opacity="0.6" />
+  <circle cx="780" cy="180" r="3" fill="#FCD34D" fill-opacity="0.4" />
+  <circle cx="920" cy="260" r="1.5" fill="#23A2B3" fill-opacity="0.6" />
+  <circle cx="680" cy="300" r="2" fill="#FFFFFF" fill-opacity="0.3" />
+</svg>

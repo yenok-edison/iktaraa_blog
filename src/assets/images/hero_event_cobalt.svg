@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg-cobalt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A8A" />
+      <stop offset="50%" stop-color="#1D4ED8" />
+      <stop offset="100%" stop-color="#172554" />
+    </linearGradient>
+
+    <radialGradient id="cobalt-glow" cx="60%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#BFDBFE" stop-opacity="0.25" />
+      <stop offset="60%" stop-color="#2563EB" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#172554" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#bg-cobalt)" />
+  <rect width="1200" height="675" fill="url(#cobalt-glow)" />
+
+  <!-- Piano Keyboard & Stage Acoustic Console Lines (Clinic & Gear Motif) -->
+  <g transform="translate(480, 200)" stroke="white" stroke-width="1.8" stroke-opacity="0.4" fill="none">
+    <rect x="0" y="40" width="460" height="140" rx="8" stroke-width="2" />
+    <!-- Piano Keys Pattern -->
+    <line x1="40" y1="40" x2="40" y2="180" stroke-opacity="0.35" />
+    <line x1="80" y1="40" x2="80" y2="180" stroke-opacity="0.35" />
+    <line x1="120" y1="40" x2="120" y2="180" stroke-opacity="0.35" />
+    <line x1="160" y1="40" x2="160" y2="180" stroke-opacity="0.35" />
+    <line x1="200" y1="40" x2="200" y2="180" stroke-opacity="0.35" />
+    <line x1="240" y1="40" x2="240" y2="180" stroke-opacity="0.35" />
+    <line x1="280" y1="40" x2="280" y2="180" stroke-opacity="0.35" />
+    <line x1="320" y1="40" x2="320" y2="180" stroke-opacity="0.35" />
+    <line x1="360" y1="40" x2="360" y2="180" stroke-opacity="0.35" />
+    <line x1="400" y1="40" x2="400" y2="180" stroke-opacity="0.35" />
+
+    <!-- Black keys indication -->
+    <rect x="25" y="40" width="28" height="90" fill="white" fill-opacity="0.3" stroke="none" />
+    <rect x="65" y="40" width="28" height="90" fill="white" fill-opacity="0.3" stroke="none" />
+    <rect x="145" y="40" width="28" height="90" fill="white" fill-opacity="0.3" stroke="none" />
+    <rect x="185" y="40" width="28" height="90" fill="white" fill-opacity="0.3" stroke="none" />
+    <rect x="225" y="40" width="28" height="90" fill="white" fill-opacity="0.3" stroke="none" />
+    <rect x="305" y="40" width="28" height="90" fill="white" fill-opacity="0.3" stroke="none" />
+    <rect x="345" y="40" width="28" height="90" fill="white" fill-opacity="0.3" stroke="none" />
+  </g>
+
+  <!-- Harmonic Sine Waves -->
+  <path d="M0,480 Q300,430 600,480 T1200,480" stroke="white" stroke-opacity="0.15" stroke-width="1.5" />
+</svg>
