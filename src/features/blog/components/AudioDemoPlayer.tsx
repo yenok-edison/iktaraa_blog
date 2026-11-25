@@ -1,50 +1,64 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Play, Pause, Volume2, VolumeX, Music, Sparkles } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Music } from "lucide-react";
 import type { AudioSnippet } from "../data/blogs.ts";
 
 interface AudioDemoPlayerProps {
-  snippet?: AudioSnippet;
+  snippet?: AudioSnippet; // AudioSnippet needs an optional `src?: string` field
   compact?: boolean;
 }
 
+const formatTime = (seconds: number) => {
+  if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, "0")}`;
+};
+
 export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
   snippet = {
-    title: "Sitka Spruce vs Cedar Top Resonance Test",
+    title: "We Are One",
     artist: "Iktaraa Acoustic Lab",
-    duration: "1:42",
+    duration: "0:00", // replaced by the real length once the audio loads
     genre: "Acoustic Fingerstyle",
+    src: "/audio/we-are-one.mp3",
   },
   compact = false,
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
+  const [realDuration, setRealDuration] = useState<number | null>(null);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const timerRef = useRef<number | null>(null);
 
-  // Play synthetic warm acoustic-like tones using Web Audio API so it works 100% offline without broken external mp3 links
+  const hasRealAudio = Boolean(snippet.src);
+  const displayDuration = realDuration ? formatTime(realDuration) : snippet.duration;
+
+  // ---------- Fallback: synthesized tones (used only when no src is provided) ----------
   const playSynthesizedNotes = () => {
     try {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (!AudioCtx) return;
 
       if (!audioContextRef.current) {
         audioContextRef.current = new AudioCtx();
       }
-
       if (audioContextRef.current.state === "suspended") {
         audioContextRef.current.resume();
       }
 
       const ctx = audioContextRef.current;
-      const notes = [261.63, 329.63, 392.0, 523.25, 440.0, 392.0, 329.63, 293.66]; // C major / A minor pentatonic acoustic chords
+      const notes = [261.63, 329.63, 392.0, 523.25, 440.0, 392.0, 329.63, 293.66];
       const now = ctx.currentTime;
 
       notes.forEach((freq, idx) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
 
-        // Warm triangle wave mimicking wood resonance
         osc.type = idx % 2 === 0 ? "triangle" : "sine";
         osc.frequency.setValueAtTime(freq, now + idx * 0.4);
 
@@ -63,7 +77,21 @@ export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
     }
   };
 
+  // ---------- Play / pause ----------
   const togglePlay = () => {
+    // Real audio file
+    if (hasRealAudio) {
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (audio.paused) {
+        audio.play().catch(() => setIsPlaying(false));
+      } else {
+        audio.pause();
+      }
+      return;
+    }
+
+    // Synth fallback
     if (isPlaying) {
       setIsPlaying(false);
       if (timerRef.current) clearInterval(timerRef.current);
@@ -71,11 +99,10 @@ export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
       setIsPlaying(true);
       playSynthesizedNotes();
 
-      // Start progress simulation
       const interval = window.setInterval(() => {
         setProgress((prev) => {
           if (prev >= 100) {
-            playSynthesizedNotes(); // loop smoothly
+            playSynthesizedNotes();
             return 0;
           }
           return prev + 2;
@@ -85,18 +112,71 @@ export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
     }
   };
 
+  // ---------- Seek (click on waveform bar) ----------
+  const seekTo = (percent: number) => {
+    const audio = audioRef.current;
+    if (hasRealAudio && audio && Number.isFinite(audio.duration) && audio.duration > 0) {
+      audio.currentTime = (percent / 100) * audio.duration;
+    }
+    setProgress(percent);
+  };
+
+  // Keep the <audio> element's mute state in sync
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.muted = isMuted;
+  }, [isMuted]);
+
+  // Reset when the track changes
+  useEffect(() => {
+    setIsPlaying(false);
+    setProgress(0);
+    setRealDuration(null);
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  }, [snippet.src]);
+
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
+      if (audioRef.current) audioRef.current.pause();
       if (audioContextRef.current && audioContextRef.current.state !== "closed") {
         audioContextRef.current.close().catch(() => {});
       }
     };
   }, []);
 
+  // Hidden audio element that does the real playback
+  const audioElement = hasRealAudio ? (
+    <audio
+      ref={audioRef}
+      src={snippet.src}
+      preload="metadata"
+      onPlay={() => setIsPlaying(true)}
+      onPause={() => setIsPlaying(false)}
+      onEnded={() => {
+        setIsPlaying(false);
+        setProgress(0);
+      }}
+      onLoadedMetadata={(e) => {
+        const d = e.currentTarget.duration;
+        if (Number.isFinite(d)) setRealDuration(d);
+      }}
+      onTimeUpdate={(e) => {
+        const a = e.currentTarget;
+        if (a.duration) setProgress((a.currentTime / a.duration) * 100);
+      }}
+    />
+  ) : null;
+
+  // ---------- Compact layout ----------
   if (compact) {
     return (
       <div className="bg-slate-900 text-white rounded-xl p-3 flex items-center justify-between gap-3 shadow-sm border border-slate-800">
+        {audioElement}
         <button
           onClick={togglePlay}
           className="w-8 h-8 rounded-full bg-rose-600 hover:bg-rose-500 active:scale-95 text-white flex items-center justify-center shrink-0 transition-transform shadow-xs"
@@ -110,7 +190,7 @@ export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
           <div className="flex items-center gap-2 text-[10px] text-slate-400">
             <span>{snippet.genre}</span>
             <span>•</span>
-            <span>{snippet.duration}</span>
+            <span>{displayDuration}</span>
           </div>
         </div>
 
@@ -133,8 +213,11 @@ export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
     );
   }
 
+  // ---------- Full layout ----------
   return (
     <div className="bg-gradient-to-br from-slate-900 via-[#131c31] to-slate-900 text-white rounded-2xl p-4 sm:p-5 shadow-lg border border-slate-800 relative overflow-hidden">
+      {audioElement}
+
       {/* Decorative gradient glow */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -175,7 +258,7 @@ export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
               <div
                 key={idx}
                 className="flex-1 flex items-center justify-center h-full cursor-pointer group"
-                onClick={() => setProgress((idx / 24) * 100)}
+                onClick={() => seekTo((idx / 24) * 100)}
               >
                 <div
                   className={`w-full rounded-full transition-all duration-150 ${
@@ -184,7 +267,9 @@ export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
                       : "bg-slate-700 group-hover:bg-slate-500"
                   }`}
                   style={{
-                    height: isPlaying ? `${Math.max(20, Math.sin(idx + progress) * 40 + val * 0.6)}%` : `${val * 0.5}%`,
+                    height: isPlaying
+                      ? `${Math.max(20, Math.sin(idx + progress) * 40 + val * 0.6)}%`
+                      : `${val * 0.5}%`,
                   }}
                 />
               </div>
@@ -193,7 +278,7 @@ export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
         )}
       </div>
 
-      {/* Controls & Progress bar */}
+      {/* Controls & Progress */}
       <div className="flex items-center justify-between text-xs text-slate-400 relative z-10">
         <div className="flex items-center gap-3">
           <button
@@ -205,13 +290,13 @@ export const AudioDemoPlayer: React.FC<AudioDemoPlayerProps> = ({
           </button>
           <div>
             <span className="font-semibold text-slate-200">
-              {isPlaying ? "Playing Wood Resonance Test" : "Click to Listen"}
+              {isPlaying ? `Playing ${snippet.title}` : "Click to Listen"}
             </span>
             <span className="block text-[10px] text-slate-400">HQ 24-bit Lossless Acoustic Capture</span>
           </div>
         </div>
 
-        <span className="font-mono text-xs text-slate-300">{snippet.duration}</span>
+        <span className="font-mono text-xs text-slate-300">{displayDuration}</span>
       </div>
     </div>
   );

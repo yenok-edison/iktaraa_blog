@@ -799,7 +799,7 @@ export const BlogDetailView: React.FC<BlogDetailViewProps> = ({
 
             {/* Audio demo preview if present */}
             {post.audioSnippet && (
-              <AudioDemoPlayer snippet={post.audioSnippet} compact={false} />
+              <AudioDemoPlayer key={post.id} snippet={post.audioSnippet} compact={false} />
             )}
           </aside>
 

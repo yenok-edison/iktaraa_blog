@@ -33,6 +33,7 @@ export interface AudioSnippet {
   artist: string;
   duration: string;
   genre: string;
+  src?: string;
 }
 
 export interface BlogPost {
@@ -41,6 +42,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   category: string;
+  audio?: AudioSnippet; 
   shortDescription: string;
   date: string;
   isoDate: string; // Used for accurate date sorting (YYYY-MM-DD)
@@ -155,6 +157,7 @@ export const BLOG_CATEGORIES: BlogCategory[] = [
 // -----------------------------------------------------------------------------
 // BLOG POSTS REPOSITORY (Easily add or modify blogs below)
 // -----------------------------------------------------------------------------
+
 export const BLOG_POSTS: BlogPost[] = [
   {
     id: "blog-1",
@@ -187,6 +190,7 @@ export const BLOG_POSTS: BlogPost[] = [
       artist: "Iktaraa Acoustic Lab",
       duration: "1:42",
       genre: "Acoustic Fingerstyle",
+      src: "/audio/we-are-one.mp3",
     },
     content: {
       introduction: "Stepping into a musical instrument showroom or browsing online for your next acoustic guitar can quickly become overwhelming. Between Sitka Spruce, Western Red Cedar, Mahogany back and sides, and mysterious terms like scalloped X-bracing, how do you discover the instrument that sings in harmony with your fingers?",
@@ -254,6 +258,7 @@ export const BLOG_POSTS: BlogPost[] = [
       artist: "Dr. Ananya Sen Trio",
       duration: "2:15",
       genre: "Classical Fusion",
+      src: "/audio/we-are-one.mp3",
     },
     content: {
       introduction: "At first glance, the rigid twelve equal-tempered semitones of a grand piano appear fundamentally at war with the continuous, microtonal slides (meend and gamakas) of Indian classical traditions. Yet, maestros from Charanjit Singh to Utsav Lal have unlocked stunning spiritual depths on the keyboard.",
@@ -310,6 +315,7 @@ export const BLOG_POSTS: BlogPost[] = [
       artist: "Iktaraa Sound Labs",
       duration: "0:58",
       genre: "Production Demo",
+      src: "/audio/we-are-one.mp3",
     },
     content: {
       introduction: "The golden rule of modern music production is simple: an average microphone in an acoustically treated room sounds infinitely superior to a $3,000 vintage tube microphone placed in a square bedroom with bare plaster walls.",
